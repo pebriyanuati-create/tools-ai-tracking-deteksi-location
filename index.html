@@ -70,26 +70,51 @@
             font-style: italic;
         }
 
-        /* Area Objek Animasi (Visual) */
+        /* AREA VISUAL MENGGUNAKAN FLEXBOX (Agar Sejajar Berdampingan) */
         .visual-area {
             position: relative;
             width: 100%;
-            height: 380px;
-            margin-top: 30px;
+            display: flex;
+            justify-content: center; /* Memusatkan semua konten */
+            align-items: center;     /* Meratakan secara vertikal */
+            gap: 15px;               /* Jarak antar ponsel dan ikon samping */
+            margin-top: 40px;
             z-index: 5;
         }
 
-        /* Desain Mockup Ponsel di Tengah (CSS Murni) */
+        /* Kolom untuk Ikon Kiri dan Kanan */
+        .side-icons {
+            display: flex;
+            flex-direction: column;
+            gap: 35px; /* Jarak vertikal antar ikon (Atas ke Bawah) */
+            z-index: 3;
+        }
+
+        /* Desain Ikon Gelembung */
+        .objek-ikon {
+            width: 65px;
+            height: 65px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Desain Mockup Ponsel di Tengah */
         .ponsel {
-            position: absolute;
+            position: relative;
             width: 170px;
             height: 340px;
             background: #ffffff;
             border-radius: 28px;
             border: 6px solid #1e293b;
-            left: 50%;
-            bottom: 20px;
-            z-index: 2;
+            z-index: 5;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 40px rgba(138, 43, 226, 0.3);
             display: flex;
             flex-direction: column;
@@ -97,6 +122,7 @@
             padding: 10px;
             overflow: hidden;
         }
+        
         /* Isi Layar Ponsel */
         .ponsel-screen {
             width: 100%;
@@ -116,7 +142,6 @@
             font-weight: bold;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
-        /* Garis Rute Biru di Layar Ponsel */
         .rute-map {
             position: absolute;
             top: 40%;
@@ -148,48 +173,29 @@
             text-align: center;
         }
 
-        /* Desain Ikon Gelembung untuk Objek Lainnya */
-        .objek-ikon {
-            position: absolute;
-            width: 75px;
-            height: 75px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 35px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Posisi masing-masing ikon */
-        .motor { left: 10%; bottom: 220px; z-index: 1; }
-        .mobil { right: 10%; bottom: 240px; z-index: 1; }
-        .pria  { left: 5%; bottom: 40px; z-index: 3; font-size: 32px;}
-        .driver{ right: 5%; bottom: 20px; z-index: 3; font-size: 32px;}
-
-        /* Keyframes Animasi Goyang Pelan (Floating) */
-        @keyframes goyang {
+        /* 
+           ANIMASI DIPERBAIKI: 
+           Ponsel tidak miring, hanya mengambang ke atas dan bawah 
+           Ikon sekeliling sedikit memutar natural
+        */
+        @keyframes goyang-ikon {
             0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-12px) rotate(3deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
             100% { transform: translateY(0) rotate(0deg); }
         }
-        /* Animasi Khusus Ponsel karena memakai posisi tengah */
+        
         @keyframes goyang-ponsel {
-            0% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-15px); }
-            100% { transform: translateX(-50%) translateY(0); }
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0); }
         }
 
-        /* Menerapkan Animasi ke Objek dengan jeda (delay) berbeda */
-        .animasi-motor  { animation: goyang 4.5s ease-in-out infinite; }
-        .animasi-mobil  { animation: goyang 5s ease-in-out infinite 1s; }
+        /* Menerapkan Animasi dengan jeda (delay) */
+        .animasi-motor  { animation: goyang-ikon 4.5s ease-in-out infinite; }
+        .animasi-mobil  { animation: goyang-ikon 5s ease-in-out infinite 1s; }
+        .animasi-pria   { animation: goyang-ikon 4.2s ease-in-out infinite 0.8s; }
+        .animasi-driver { animation: goyang-ikon 3.8s ease-in-out infinite 1.5s; }
         .animasi-ponsel { animation: goyang-ponsel 6s ease-in-out infinite 0.5s; }
-        .animasi-pria   { animation: goyang 4.2s ease-in-out infinite 0.8s; }
-        .animasi-driver { animation: goyang 3.8s ease-in-out infinite 1.5s; }
 
         /* Tombol Memulai (Sticky di bawah) */
         .btn-container {
@@ -243,16 +249,16 @@
             <p>Layanan ini juga dapat digunakan untuk mendukung proses keamanan siber (<em>cyber security</em>) sesuai dengan penggunaan yang sah.</p>
         </div>
 
-        <!-- Area Objek Animasi Menggunakan Ikon -->
+        <!-- AREA OBJEK BERDAMPINGAN MENGGUNAKAN FLEXBOX -->
         <div class="visual-area">
             
-            <!-- Ikon Motor (Kiri Atas) -->
-            <div class="objek-ikon motor animasi-motor">🏍️</div>
+            <!-- Kolom Ikon Kiri -->
+            <div class="side-icons">
+                <div class="objek-ikon animasi-motor">🏍️</div>
+                <div class="objek-ikon animasi-pria">📦</div>
+            </div>
             
-            <!-- Ikon Mobil (Kanan Atas) -->
-            <div class="objek-ikon mobil animasi-mobil">🚙</div>
-            
-            <!-- Ponsel / HP di Tengah (Dibuat dengan CSS) -->
+            <!-- Ponsel / HP di Tengah -->
             <div class="ponsel animasi-ponsel">
                 <div class="ponsel-screen">
                     <div class="header-map">👥 Pelacakan Lokasi</div>
@@ -262,11 +268,11 @@
                 </div>
             </div>
             
-            <!-- Ikon Pria / Kurir (Kiri Bawah) -->
-            <div class="objek-ikon pria animasi-pria">📦</div>
-            
-            <!-- Ikon Driver Ojol (Kanan Bawah) -->
-            <div class="objek-ikon driver animasi-driver">🛵</div>
+            <!-- Kolom Ikon Kanan -->
+            <div class="side-icons">
+                <div class="objek-ikon animasi-mobil">🚙</div>
+                <div class="objek-ikon animasi-driver">🛵</div>
+            </div>
 
         </div>
 
